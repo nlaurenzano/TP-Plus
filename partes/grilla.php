@@ -35,13 +35,13 @@
 ?>	
 <div class="">
 	<h3>LISTADOS</h3>
+	<div id="listados"></div>
 
-<?php 
+	<script>
+		//$("#principal").html(MostrarJSON(JSON.parse(<?php ImprimirTablas(); ?>)));
+		$("#listados").html(MostrarJSON(JSON.parse('<?php ImprimirTablas(); ?>')));
+	</script>
 
-	//Estacionamiento::ImprimirTablas();
-	ImprimirTablas();
-	
-?>
 </div>
 
 <form name="frmSalir" method="POST" >

@@ -103,70 +103,33 @@ function TraerCobradosWS($host) {
 }
 
 function ImprimirTablas() {
-	$host = 'http://localhost:80/TP-Laurenzano/SERVIDOR/ws.php';
+	$host = 'http://localhost:8080/TP-Laurenzano/SERVIDOR/ws.php';
 	//$host = 'http://www.tplaurenzano.esy.es/SERVIDOR/ws.php';
 	$estacionados = TraerEstacionadosWS($host);
 	$cobrados = TraerCobradosWS($host);
 
-	echo '<div style="padding:10px;">';
-	
-	echo '<div style="float:left;">';		// Tabla de estacionados
-	echo "<h3>Estacionados</h3>";
-	echo "<table>
-			<tr>
-				<th>Patente</th>
-				<th>Entrada</th>
-			</tr>";
+	// Tabla de estacionados
+	$retorno = '{"estacionados":[';
 
 	foreach ($estacionados as $veh) {
-		echo  "<tr>
-					<td>".$veh['patente']."</td>
-					<td>".$veh['entrada']."</td>";
-
-		/*
-		echo "		<td>
-						<button class=\"btn btn-success hidden\" name=\"Salir\" 
-							onclick=\"Sacar('".$veh->GetPatente()."')\">Salir</button>
-						<button class=\"btn btn-danger hidden\" name=\"Borrar\" 
-							onclick=\"Borrar('".$veh->GetPatente()."')\">Borrar</button>
-						<button class=\"btn btn-danger hidden\" name=\"Modificar\" 
-							onclick=\"Modificar('".$veh->GetPatente()."')\">Modificar</button>
-					</td>";
-					*/
-		echo "			</tr>";
+		if ($retorno != '{"estacionados":[') {$retorno .= ",";}
+		$retorno .= '{"patente":"'.$veh['patente'].'","entrada":"'.$veh['entrada'].'"}';
 	}
-
-	echo '</table></div>';						// Tabla de estacionados
 
 	// Tabla de tickets
-	echo '<div style="float:right;">
-			<h3>Cobrados</h3>
-			<table>
-				<tr>
-					<th>Patente</th>
-					<th>Entrada</th>
-					<th>Salida</th>
-					<th>Importe</th>
-				</tr>';
-	
+	$retorno2 = '],"tickets":[';
+
 	foreach ($cobrados as $ticket) {
-		echo  "<tr>
-					<td>".$ticket['patente']."</td>
-					<td>".$ticket['entrada']."</td>
-					<td>".$ticket['salida']."</td>
-					<td class=\"moneda\">$ ".$ticket['importe']."</td>";
-		/*
-		echo "		<td>
-						<button class=\"btn btn-danger hidden\" name=\"Borrar\" 
-							onclick=\"Borrar('".$ticket->GetPatente()."')\">Borrar</button>
-						<button class=\"btn btn-danger hidden\" name=\"Modificar\" 
-							onclick=\"Modificar('".$ticket->GetPatente()."')\">Modificar</button>
-					</td>";
-		*/
-					echo "	</tr>";
+		if ($retorno2 != '],"tickets":[') {$retorno2 .= ",";}
+		$retorno2 .= '{"patente":"'.$ticket['patente'].'",';
+		$retorno2 .= '"entrada":"'.$ticket['entrada'].'",';
+		$retorno2 .= '"salida":"'.$ticket['salida'].'",';
+		$retorno2 .= '"importe":"'.$ticket['importe'].'"}';
 	}
 	
-	echo '</table></div></div>';
+	$retorno2 .= ']}';
+	
+	echo $retorno . $retorno2;
 }
 
 ?>

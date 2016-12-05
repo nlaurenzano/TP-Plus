@@ -1,6 +1,7 @@
-
 function Mostrar(queMostrar)
 {
+	$("#principal").html('<img style="padding-top:10%;" src="imagenes/preloader.gif">');
+
 	var funcionAjax=$.ajax({
 		url:"nexo.php",
 		type:"post",
@@ -8,6 +9,14 @@ function Mostrar(queMostrar)
 	});
 	funcionAjax.done(function(retorno){
 		$("#principal").html(retorno);
+		/*
+		if (queMostrar=='MostrarGrilla') {
+			alert(retorno);
+			$("#principal").html(MostrarJSON(JSON.parse(retorno)));
+		} else {
+			$("#principal").html(retorno);
+		}
+		*/
 	});
 	funcionAjax.fail(function(retorno){
 		$("#principal").html(retorno.responseText);	
@@ -33,4 +42,38 @@ function MostrarLogin() {
 	funcionAjax.always(function(retorno) {
 		//alert("siempre "+retorno.statusText);
 	});
+}
+
+function MostrarJSON(tablas) {
+
+	var retorno;
+
+	retorno = '<div style="padding:10px;">';
+	
+	// Tabla de estacionados
+	retorno += '<div style="float:left;">';
+	retorno += "<h3>Estacionados</h3>";
+	retorno += "<table><tr><th>Patente</th><th>Entrada</th></tr>";
+
+	for (var i = 0; i <= tablas.estacionados.length - 1; i++) {
+		retorno +=  "<tr><td>" + tablas.estacionados[i].patente + "</td><td>" + tablas.estacionados[i].entrada + "</td></tr>";
+	}
+
+	retorno += '</table></div>';
+
+	// Tabla de tickets
+	retorno += '<div style="float:right;">';
+	retorno += "<h3>Cobrados</h3>";
+	retorno += "<table><tr><th>Patente</th><th>Entrada</th><th>Salida</th><th>Importe</th></tr>";
+
+	for (var i = 0; i <= tablas.tickets.length - 1; i++) {
+		retorno +=  "<tr><td>" + tablas.tickets[i].patente + "</td>";
+		retorno +=  "<td>" + tablas.tickets[i].entrada + "</td>";
+		retorno +=  "<td>" + tablas.tickets[i].salida + "</td>";
+		retorno +=  "<td class=\"moneda\">$ " + tablas.tickets[i].importe + "</td></tr>";
+	}
+
+	retorno += '</table></div>';
+
+	return retorno;
 }
