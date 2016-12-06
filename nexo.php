@@ -107,7 +107,14 @@ function ImprimirTablas() {
 	//$host = 'http://www.tplaurenzano.esy.es/SERVIDOR/ws.php';
 	$estacionados = TraerEstacionadosWS($host);
 	$cobrados = TraerCobradosWS($host);
-
+/*
+	$tipoUsuario = '{"tipoUsuario:"';
+	if($_SESSION['rol']=='admin') {
+		$tipoUsuario .= '"admin"}';
+	} else {
+		$tipoUsuario .= '"user"}';
+	}
+*/
 	// Tabla de estacionados
 	$retorno = '{"estacionados":[';
 
@@ -129,6 +136,7 @@ function ImprimirTablas() {
 	
 	$retorno2 .= ']}';
 	
+	//echo $tipoUsuario . $retorno . $retorno2;
 	echo $retorno . $retorno2;
 }
 

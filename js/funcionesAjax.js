@@ -56,7 +56,16 @@ function MostrarJSON(tablas) {
 	retorno += "<table><tr><th>Patente</th><th>Entrada</th></tr>";
 
 	for (var i = 0; i <= tablas.estacionados.length - 1; i++) {
-		retorno +=  "<tr><td>" + tablas.estacionados[i].patente + "</td><td>" + tablas.estacionados[i].entrada + "</td></tr>";
+		retorno +=  "<tr><td>" + tablas.estacionados[i].patente + "</td>";
+		retorno +=  "<td>" + tablas.estacionados[i].entrada + "</td>";
+/*
+		if (tablas.tipoUsuario=='admin') {
+			retorno +=  '<td><div class="btn-group-xs"><button class="btn btn-success" name="Salir" onclick="Sacar(\'' + tablas.estacionados[i].patente + '\')">Salir</button>';
+			retorno +=  '<button class="btn btn-danger" style="margin:0 1px 0 1px;" name="Borrar" onclick="Borrar(\'' + tablas.estacionados[i].patente + '\')">Borrar</button>';
+			retorno +=  '<button class="btn btn-danger" name="Modificar" onclick="Modificar(\'' + tablas.estacionados[i].patente + '\')">Modificar</button></div></td>';
+		}
+*/
+		retorno +=  '</tr>';
 	}
 
 	retorno += '</table></div>';
